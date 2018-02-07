@@ -1,0 +1,33 @@
+{
+  "name": "reactpractice6x",
+  "version": "1.0.0",
+  "description": "//-------------------------------------------------- GIT:",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack",
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gutierr3z/reactpractice6x.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gutierr3z/reactpractice6x/issues"
+  },
+  "homepage": "https://github.com/gutierr3z/reactpractice6x#readme",
+  "dependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-latest": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "express": "^4.16.2",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "webpack": "^3.10.0",
+    "webpack-dev-middleware": "^2.0.4"
+  }
+}

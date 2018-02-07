@@ -33,12 +33,12 @@ npm install --save babel-preset-react
 
 create .babelrc
 
-    {
-        "presets": [
-            ["latest", { "modules": false }],
-            "react"
-        ]
-    }
+{
+    "presets": [
+        ["latest", { "modules": false }],
+        "react"
+    ]
+}
 
 //--------------------------------------------------
 WEBPACK:
@@ -49,6 +49,36 @@ create src/app.js
 create webpack.config.js
 
 
+
+(webpack.config.js)-----
+const path = require('path');
+
+module.exports = {
+ context: path.join(__dirname, 'src'),
+ entry: [
+   './app.js',
+ ],
+ output: {
+   path: path.join(__dirname, 'www'),
+   filename: 'bundle.js'
+ },
+ module: {
+   rules: [
+     {
+       test: /\.js$/,
+       exclude: /node_modules/,
+       use: [
+         'babel-loader',
+       ],
+     },
+   ],
+ },
+ resolve: {
+   modules: [
+     path.join(__dirname, 'node_modules'),
+   ],
+ },
+};
 //--------------------------------------------------
 EXPRESS:
 
@@ -57,6 +87,32 @@ npm install --save express webpack-dev-middleware
 create server.js
 create www/index.html
 
+(server.js)-----
+const express = require('express');
+const webpackDevMiddleware = require('webpack-dev-middleware');
+const webpack = require('webpack');
+const webpackConfig = require('./webpack.config.js');
+const app = express();
+ 
+const compiler = webpack(webpackConfig);
+
+app.use(express.static( __dirname + '/www' ));
+ 
+app.use(webpackDevMiddleware(compiler, {
+  hot: true,
+  filename: 'bundle.js',
+  publicPath: '/',
+  stats: {
+    colors: true,
+  },
+  historyApiFallback: true,
+}));
+
+const server = app.listen( process.env.PORT || 3000, function() {
+  const host = server.address().address;
+  const port = server.address().port;
+  console.log('Example app listening at 3000');
+});
 //--------------------------------------------------
 REACT:
 
@@ -65,7 +121,11 @@ npm install --save react react-dom
 //--------------------------------------------------
 DEPLOY:
 
-add "compile": "webpack", to package.json's scripts
+add 
+    "compile": "webpack", 
+    "start": "node server.js",
+
+to package.json's scripts
 
 npm run compile
 
@@ -76,6 +136,7 @@ npm install --save-dev css-loader
 npm install --save style-loader
 npm install --save extract-text-webpack-plugin
 
+(webpack.config.js)-----
 module: {
    rules: [
      {
