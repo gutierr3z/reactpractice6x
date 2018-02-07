@@ -127,6 +127,8 @@ add
 
 to package.json's scripts
 
+execute compile command:
+
 npm run compile
 
 //--------------------------------------------------
