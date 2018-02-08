@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 //--------------------------------------------------
+import Comp1 from './components/comp1';
+import Comp2 from './components/comp2';
 //==================================================
 class APP extends Component {
 
@@ -8,16 +10,37 @@ class APP extends Component {
         super( props );
         this.state = {
             stateOne: 'un',
-            stateTwo: 'deux'
+            stateTwo: 'deux',
+            users: []
         };
     };
+
+    componentWillMount() {
+        fetch( 'http://jsonplaceholder.typicode.com/users' )
+            .then( results => {
+                return results.json();
+            }).then( data => {
+                // let data.results.map( ( user ) => {
+                //     return (
+                //         <div key={ user.id }>
+                //             user
+                //         </div>
+                //     );
+                // });
+                this.setState( { users: data } );
+                console.log( 'state: ', this.state.users );
+            });
+    }
 
     render() {
         return (
             
-            <div>
+            <div className = "app">
                 hello there!
+                <Comp1 />
+                <Comp2 />
             </div>
+            
         );
     };
 };
